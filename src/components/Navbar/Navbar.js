@@ -25,6 +25,11 @@ const Dropdown = ({ title, items }) => (
 
 const Navbar = () => {
   const { user, isLoading } = useAuth0();
+  // Extract initials from user's name
+  const getUserInitials = (name) => {
+    const names = name.split(' ');
+    return names.map((n) => n[0]).join('');
+  };
 
   // Define the menu items for the dropdowns
   const whoWeAreItems = ['Our Story', 'Our Team', 'Careers'];
@@ -63,7 +68,11 @@ const Navbar = () => {
         {/* User Information */}
         <div className="flex items-center">
           {!isLoading && user && (
-            <span className="font-medium text-neutralgray-600">{user.name}</span>
+            <Link to="/profile">
+            <div className="flex items-center justify-center bg-primaryblue-500 text-white font-medium rounded-full w-10 h-10">
+              {getUserInitials(user.name)}
+            </div>
+            </Link>
           )}
         </div>
       </div>
