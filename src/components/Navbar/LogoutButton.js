@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import './Navbar.css';
 
 const LogoutButton = () => {
   const { logout } = useAuth0();
@@ -7,7 +8,7 @@ const LogoutButton = () => {
   return (
     <button
       onClick={() => logout({ returnTo: window.location.origin })}
-      className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-600"
+      className="logout-button"
     >
       Log Out
     </button>

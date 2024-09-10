@@ -1,0 +1,117 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Container */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 150px;
+  text-align: left;
+  font-size: 24.57px;
+  color: #4a4a4a;
+  padding-bottom: 40px;
+}
+
+/* Header Section */
+.header-section {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 60px;
+  gap: 50px;
+  position: relative;
+}
+
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.header-title {
+  margin-top: 20px;
+  font-size: 35px;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.header-description {
+  font-size: 15px;
+  font-weight: 400;
+  color: #4a4a4a;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+.header-image {
+  width: 72%;
+}
+
+/* Smooth scroll button */
+.scroll-button {
+  background: transparent;
+  text-decoration: underline;
+  color: #007bff;
+}
+
+#scrollTarget {
+  padding-top: 150px; /* Adds space above the target */
+  margin-top: -150px; /* Prevents visible shift after scroll */
+}
+
+/* Portfolio Cards */
+.card-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 32px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.hidden-content {
+  margin-top: 10px;
+  display: none;
+  font-size: 1rem;
+}
+
+.card:hover .hidden-content {
+  display: block;
+}
+
+/* Footer */
+.footer {
+  background-color: #2f2f2f;
+  color: #fff;
+  text-align: center;
+  padding: 16px 8px;
+}
+
+.footer-text {
+  font-size: 12px;
+  font-weight: 400;
+}
