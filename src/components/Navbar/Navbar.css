@@ -77,7 +77,7 @@
 }
 
 .logout-button, .login-button {
-  background-color: #cab7b7;
+  background-color: #d0cfcf;
   color: #4b5563;
   padding: 10px 20px;
   border-radius: 5px;
@@ -86,7 +86,7 @@
 }
 
 .logout-button:hover, .login-button:hover {
-  background-color: #b91c1c;
+  background-color: #a29e9e;
 }
 
 .navbar-user-info {
@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  #cab7b7;
+  background-color: #d0cfcf;
   color: #4b5563;
   font-weight: 500;
   border-radius: 50%;
