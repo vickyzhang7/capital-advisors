@@ -8,10 +8,10 @@ function App() {
     <div className="App">
       <Navbar />
       <div className='page-content'>
-      <Routes>
-        {/* Use 'element' instead of 'component' */}
-        <Route path="/" element={<Homepage />} />
-      </Routes>
+        <Routes>
+          {/* Use 'element' instead of 'component' */}
+          <Route path="/" element={<Homepage />} />
+        </Routes>
       </div>
     </div>
   );

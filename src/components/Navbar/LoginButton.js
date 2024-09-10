@@ -9,7 +9,7 @@ const LoginButton = () => {
     <button
       onClick={() => loginWithRedirect()}
       className="login-button"
-    >
+      >
       Log In
     </button>
   );

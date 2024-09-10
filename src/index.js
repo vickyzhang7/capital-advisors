@@ -12,10 +12,10 @@ root.render(
     domain="dev-aib3632ftvfcwyfe.us.auth0.com"
     clientId="JBUhBPne5msU9GvNNpmwYUkP6lmPdKDP"
     authorizationParams={{ redirect_uri: window.location.origin }}
-  >
-  <BrowserRouter> 
-    <App />
-  </BrowserRouter>
+    >
+    <BrowserRouter> 
+      <App />
+    </BrowserRouter>
   </Auth0Provider>
 );
 

@@ -16,10 +16,10 @@ const Dropdown = ({ title, items }) => (
           key={index}
           to={`/${item.replace(/\s+/g, '-').toLowerCase()}`}
           className="dropdown-item"
-        >
+                >
           {item}
         </Link>
-      ))}
+            ))}
     </div>
   </div>
 );
@@ -61,19 +61,19 @@ const Navbar = () => {
             </Link>
             <LogoutButton />
           </>
-        ) : (
-          <LoginButton />
-        )}
+                ) : (
+                  <LoginButton />
+                )}
 
         {/* User Information */}
         <div className="navbar-user-info">
           {!isLoading && user && (
             <Link to="/profile">
-            <div className="user-initials">
-              {getUserInitials(user.name)}
-            </div>
+              <div className="user-initials">
+                {getUserInitials(user.name)}
+              </div>
             </Link>
-          )}
+                    )}
         </div>
       </div>
     </div>
