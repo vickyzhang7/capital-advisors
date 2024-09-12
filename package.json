@@ -29,7 +29,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "server": "node server.js",
-    "client": "react-scripts start"
+    "client": "react-scripts start",
+    "heroku-postbuild": "npm install"
   },  
   "engines": {
     "node": "20.x",
