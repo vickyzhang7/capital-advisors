@@ -1,15 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-const path = require('path');  // Add path to serve the React build
+const path = require('path'); 
 const bodyParser = require('body-parser');
 
 // Initialize the app
 const app = express();
 app.use(bodyParser.json());
 
+// CORS configuration based on environment
 app.use(cors({
-  origin: 'http://localhost:3000',  // Allow requests from your React app
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://capital-advisors-demo.com' // Production domain
+    : 'http://localhost:3000',  // Development domain
   methods: ['GET', 'POST'],
   credentials: true
 }));
@@ -45,14 +48,15 @@ app.post('/api/contact', (req, res) => {
   });
 });
 
-// Serve static files from the React app
+// Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, 'build')));
 
-// The "catchall" handler: for any request that doesn't match API routes, send the React app's index.html
+// Catch-all handler: serve React app's index.html for all unknown routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+// Start the server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

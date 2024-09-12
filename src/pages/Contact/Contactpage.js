@@ -10,6 +10,11 @@ const Contactpage = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
+  // Define API URL based on the environment
+  const apiUrl = process.env.NODE_ENV === 'production'
+    ? 'https://capital-advisors-demo.com/api/contact' 
+    : 'http://localhost:5001/api/contact';
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -21,7 +26,7 @@ const Contactpage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/api/contact', formData);
+      await axios.post(apiUrl, formData);
       setSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -77,7 +82,7 @@ const Contactpage = () => {
         <br />
         <button type="submit">Send</button>
       </form>
-      {submitted && <p>Thank you for contacting us.</p>}
+      {submitted && <p>Thank you for contacting us!</p>}
     </div>
   );
 };
