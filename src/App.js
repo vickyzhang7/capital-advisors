@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Homepage from './pages/Home/Landing'; // Capitalize the component name
 import Teampage from './pages/Team/Teampage';
+import Contactpage from './pages/Contact/Contactpage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           {/* Use 'element' instead of 'component' */}
           <Route path="/" element={<Homepage />} />
           <Route path="/our-team" element={<Teampage />} />
+          <Route path="/contact-us" element={<Contactpage />} />
         </Routes>
       </div>
     </div>
