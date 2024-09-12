@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
-const path = require('path');  // Required for serving static files
 
 // Initialize the app
 const app = express();
@@ -45,17 +44,6 @@ app.post('/api/contact', (req, res) => {
     }
   });
 });
-
-// Serve static files from the React app (in production)
-if (process.env.NODE_ENV === 'production') {
-  // Serve the static files from the React app
-  app.use(express.static(path.join(__dirname, 'build')));
-
-  // All other GET requests not handled by the API routes will return the React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
-}
 
 // Start the server
 const PORT = process.env.PORT || 5001;
