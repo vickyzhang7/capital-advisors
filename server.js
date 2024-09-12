@@ -1,17 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
+const path = require('path');  // Add path to serve the React build
 const bodyParser = require('body-parser');
 
 // Initialize the app
 const app = express();
 app.use(bodyParser.json());
 
-// Enable CORS for all requests (or limit it to your frontend origin)
 app.use(cors({
-  origin: 'http://localhost:3000',  // Allow requests only from your React app
-  methods: ['GET', 'POST'],  // Allow specific methods
-  credentials: true  // Allow credentials if necessary
+  origin: 'http://localhost:3000',  // Allow requests from your React app
+  methods: ['GET', 'POST'],
+  credentials: true
 }));
 
 // Database connection (adjust with your RDS credentials)
@@ -45,7 +45,14 @@ app.post('/api/contact', (req, res) => {
   });
 });
 
-// Start the server
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'build')));
+
+// The "catchall" handler: for any request that doesn't match API routes, send the React app's index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
