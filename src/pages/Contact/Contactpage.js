@@ -77,7 +77,7 @@ const Contactpage = () => {
         <br />
         <button type="submit">Send</button>
       </form>
-      {submitted && <p>Thank you for contacting us!</p>}
+      {submitted && <p>Thank you for contacting us.</p>}
     </div>
   );
 };
