@@ -5,6 +5,7 @@ import Homepage from './pages/Home/Landing'; // Capitalize the component name
 import Teampage from './pages/Team/Teampage';
 import Ourstory from './pages/Ourstory/Ourstory';
 import Contactpage from './pages/Contact/Contactpage';
+import Cashinvestment from './pages/Cashinvestment/Cashinvestment';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/our-team" element={<Teampage />} />
           <Route path="/our-story" element={<Ourstory />} />
+          <Route path="/cash-investments" element={<Cashinvestment />} />
           <Route path="/contact-us" element={<Contactpage />} />
         </Routes>
       </div>
