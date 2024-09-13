@@ -6,11 +6,11 @@ const Cashinvestment = () => {
   const navigate = useNavigate();
   const investments = [
     {
-      title: "Real Estate",
+      title: "real-estate",
       description: "Explore our investment opportunities in Real Estate. Click the button below to learn more.",
     },
     {
-      title: "Stock Market",
+      title: "stock-market",
       description: "Explore our investment opportunities in Stock Market. Click the button below to learn more.",
     }
   ];
@@ -18,6 +18,7 @@ const Cashinvestment = () => {
   const handleInvestClick = (title) => {
     navigate(`/cash-investments/${title}`);
   };
+  
 
   return (
     <div className="cash-investment-container">

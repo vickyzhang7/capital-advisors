@@ -6,6 +6,8 @@ import Teampage from './pages/Team/Teampage';
 import Ourstory from './pages/Ourstory/Ourstory';
 import Contactpage from './pages/Contact/Contactpage';
 import Cashinvestment from './pages/Cashinvestment/Cashinvestment';
+import Realestate from './pages/Realestate/Realestate';
+import Stockmarket from './pages/Stockmarket/Stockmarket';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/our-team" element={<Teampage />} />
           <Route path="/our-story" element={<Ourstory />} />
           <Route path="/cash-investments" element={<Cashinvestment />} />
+          <Route path="/cash-investments/real-estate" element={<Realestate />} />
+          <Route path="/cash-investments/stock-market" element={<Stockmarket />} />
           <Route path="/contact-us" element={<Contactpage />} />
         </Routes>
       </div>
