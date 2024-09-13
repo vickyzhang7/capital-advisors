@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Contactpage.css'; // Import the CSS file for styling
 
 const Contactpage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
+    subject: 'Choose one', // default value
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
@@ -14,6 +15,8 @@ const Contactpage = () => {
   const apiUrl = process.env.NODE_ENV === 'production'
     ? 'https://capital-advisors-demo.com/api/contact' 
     : 'http://localhost:5001/api/contact';
+
+  const solutionsItems = ['Choose one','Cash Investments', 'Risk Management', 'Debt Finance Consulting'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,10 +36,20 @@ const Contactpage = () => {
     }
   };
 
+  const closeModal = () => {
+    setSubmitted(false);
+    setFormData({
+      name: '',
+      email: '',
+      subject: 'Choose one',
+      message: '',
+    });
+  };
+
   return (
-    <div>
+    <div className="contact-container">
       <h2>Contact Us</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="contact-form">
         <label>
           Name:
           <input
@@ -45,9 +58,10 @@ const Contactpage = () => {
             value={formData.name}
             onChange={handleChange}
             required
+            className="contact-input"
           />
         </label>
-        <br />
+        
         <label>
           Email:
           <input
@@ -56,20 +70,27 @@ const Contactpage = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            className="contact-input"
           />
         </label>
-        <br />
+        
         <label>
-          Subject:
-          <input
-            type="text"
+          Solutions:
+          <select
             name="subject"
             value={formData.subject}
             onChange={handleChange}
             required
-          />
+            className="contact-input"
+          >
+            {solutionsItems.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
         </label>
-        <br />
+        
         <label>
           Message:
           <textarea
@@ -77,12 +98,22 @@ const Contactpage = () => {
             value={formData.message}
             onChange={handleChange}
             required
+            className="contact-textarea"
           ></textarea>
         </label>
-        <br />
-        <button type="submit">Send</button>
+        
+        <button type="submit" className="contact-button">
+          Send
+        </button>
       </form>
-      {submitted && <p>Thank you for contacting us!</p>}
+      {submitted && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p>Thank you for contacting us!</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

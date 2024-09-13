@@ -32,8 +32,8 @@ const Navbar = () => {
     return names.map((n) => n[0]).join('');
   };
 
-  const whoWeAreItems = ['Our Story', 'Our Team', 'Careers'];
-  const solutionsItems = ['Investment Management', 'Corporate Banking', 'Debt Finance Consulting'];
+  const whoWeAreItems = ['Our Story', 'Our Team'];
+  const solutionsItems = ['Cash Investments', 'Risk Management', 'Debt Finance Consulting'];
   const insightItems = ['News', 'Event'];
 
   return (
