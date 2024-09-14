@@ -31,4 +31,9 @@
       grid-template-columns: 1fr;
     }
   }
+  .Documents{
+    display: flex;
+    flex-direction: column;
+    margin: 0 80px;
+  }
   

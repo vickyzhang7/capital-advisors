@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography } from 'antd';
 import Folder from '../../components/Folder';
 import S3FileList from '../../components/FileList';
+import './Dataroom.css';
 
 const { Title } = Typography;
 

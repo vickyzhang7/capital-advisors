@@ -3,11 +3,24 @@ import './Realestate.css';
 import { Row, Col , Button } from 'antd';
 import Card from '../../components/Card/Card';
 import Dataroom from '../../components/Dataroom/Dataroom';
+import AWS from 'aws-sdk';
 
 const Realestate = () => {
   const [properties, setProperties] = useState([]);
   const [selectedPropertyIndex, setSelectedPropertyIndex] = useState(null);
+  const [financeFiles, setFinanceFiles] = useState([]);
+  const [taxFiles, setTaxFiles] = useState([]);
+  const [docsFiles, setDocsFiles] = useState([]);
+  const [photosFiles, setPhotosFiles] = useState([]);
   const detailSectionRef = useRef(null); 
+
+  AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: 'us-east-2',
+  });
+
+  
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -19,96 +32,44 @@ const Realestate = () => {
     fetchProperties();
   }, []);
 
-  const [files] = useState([
-    {
-      path: 'Finance/1.docx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Finance/1.docx',
-      time: 'Jan 15 2022',
-    },
-    {
-      path: 'Finance/1.xlsx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Finance/1.xlsx',
-      time: 'Feb 20 2023',
-    },
-    {
-      path: 'Finance/2.docx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Finance/2.docx',
-      time: 'Mar 10 2021',
-    },
-    {
-      path: 'Finance/3.docx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Finance/3.docx',
-      time: 'Apr 22 2023',
-    },
-    {
-      path: 'Finance/4.docx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Finance/4.docx',
-      time: 'May 11 2021',
-    },
-    { path: 'Docs/1.docx', url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Docs/1.docx', time: 'Jun 5 2022' },
-    { path: 'Docs/2.docx', url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Docs/2.docx', time: 'Jul 18 2023' },
-    { path: 'Docs/2.xlsx', url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Docs/2.xlsx', time: 'Aug 9 2022' },
-    { path: 'Docs/3.pdf', url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Docs/3.pdf', time: 'Sep 25 2021' },
-    { path: 'Docs/4.pdf', url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Docs/4.pdf', time: 'Oct 14 2023' },
-    {
-      path: 'Photos/+1.png',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Photos/+1.png',
-      time: 'Nov 7 2022',
-    },
-    {
-      path: 'Photos/+2.png',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Photos/+2.png',
-      time: 'Dec 30 2021',
-    },
-    {
-      path: 'Photos/+3.png',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Photos/+3.png',
-      time: 'Jan 19 2022',
-    },
-    {
-      path: 'Photos/+4.png',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Photos/+4.png',
-      time: 'Feb 25 2023',
-    },
-    {
-      path: 'Photos/+5.png',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/Photos/+5.png',
-      time: 'Mar 17 2021',
-    },
-  ]);
-
-  const [taxFiles] = useState([
-    {
-      path: 'AnnualReport/1.docx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/AnnualReport/1.docx',
-      time: 'Jan 15 2022',
-    },
-    {
-      path: 'AnnualReport/1.pdf',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/AnnualReport/1.pdf',
-      time: 'Feb 20 2023',
-    },
-    {
-      path: 'AnnualReport/2.docx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/AnnualReport/2.docx',
-      time: 'Mar 10 2021',
-    },
-    {
-      path: 'AnnualReport/1.pptx',
-      url: 'https://elseware-test.s3.us-east-2.amazonaws.com/AnnualReport/1.pptx',
-      time: 'Apr 22 2023',
-    },
-  ]);
+  useEffect(() => {
+    const s3 = new AWS.S3();
+    const fetchS3Files = (folder) => {
+      const params = {
+        Bucket: 'elseware-test',
+        Prefix: folder,
+      };
+  
+      return new Promise((resolve, reject) => {
+        s3.listObjectsV2(params, (err, data) => {
+          if (err) {
+            console.log('Error fetching data from S3:', err);
+            reject(err);
+          } else {
+            const files = data.Contents.map((file) => ({
+              path: file.Key,
+              url: `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${file.Key}`,
+              time: new Date(file.LastModified).toLocaleDateString(),
+            }));
+            resolve(files);
+          }
+        });
+      });
+    };
+  
+    fetchS3Files('Finance/').then(setFinanceFiles);
+    fetchS3Files('AnnualReport/').then(setTaxFiles);
+    fetchS3Files('Docs/').then(setDocsFiles);
+    fetchS3Files('Photos/').then(setPhotosFiles);
+  }, []);  // No more dependency issues
+  
+  
 
   const handleDetailsClick = (index) => {
     if (selectedPropertyIndex === index) {
-      // 再次点击同一个 property 时，隐藏细节
       setSelectedPropertyIndex(null);
     } else {
-      // 点击不同 property 时，显示相应细节
       setSelectedPropertyIndex(index);
-
-      // 滚动到详细信息部分
       setTimeout(() => {
         if (detailSectionRef.current) {
           detailSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -116,8 +77,6 @@ const Realestate = () => {
       }, 300);
     }
   };
-
-  
 
   return (
     <div>
@@ -136,41 +95,40 @@ const Realestate = () => {
 
       <div className="real-estate-grid">
         {properties.map((property, index) => (
-            <div key={index}>
-          <Card
-            key={index}
-            title={property.title}
-            imgUrl={property.imgUrl}
-            propertyType={property.propertyType}
-            price={property.price}
-            marketCap={property.marketCap}
-            capRate={property.capRate}
-            priceChange={property.priceChange}
-            button={
-              <Button onClick={() => handleDetailsClick(index)}>
-                {selectedPropertyIndex === index ? 'Hide Details' : 'Details'}
-              </Button>}
-          />
-        
-            </div>
+          <div key={index}>
+            <Card
+              key={index}
+              title={property.title}
+              imgUrl={property.imgUrl}
+              propertyType={property.propertyType}
+              price={property.price}
+              marketCap={property.marketCap}
+              capRate={property.capRate}
+              priceChange={property.priceChange}
+              button={
+                <Button onClick={() => handleDetailsClick(index)}>
+                  {selectedPropertyIndex === index ? 'Hide Details' : 'Details'}
+                </Button>
+              }
+            />
+          </div>
         ))}
       </div>
-      {selectedPropertyIndex !== null && (
-        <div className="Page" ref={detailSectionRef}> 
-        {/* Property Details Section */}
-        <Row>
-          <Col span={24}>
-            <Dataroom title="Property Details" folders={['Photos', 'Docs', 'Finance']} files={files} />
-          </Col>
-        </Row>
 
-        {/* Tax Document Section */}
-        <Row>
-          <Col span={24}>
-            <Dataroom title="Tax Document" folders={['AnnualReport']} files={taxFiles} />
-          </Col>
-        </Row>
-      </div>
+      {selectedPropertyIndex !== null && (
+        <div className="Documents" ref={detailSectionRef}>
+          <Row>
+            <Col span={24}>
+              <Dataroom title="Property Details" folders={['Photos', 'Docs', 'Finance']} files={photosFiles.concat(docsFiles, financeFiles)} />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={24}>
+              <Dataroom title="Tax Document" folders={['AnnualReport']} files={taxFiles} />
+            </Col>
+          </Row>
+        </div>
       )}
     </div>
   );
