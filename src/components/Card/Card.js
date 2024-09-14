@@ -30,6 +30,7 @@ const Card = ({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
+      <div className="card-word">
         <Row style={{ marginTop: '10px' }}>
           <span className="property-type">Property Type: {propertyType}</span>
         </Row>
@@ -55,10 +56,10 @@ const Card = ({
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ marginTop: '15px' }}>
         {button}
-
         </Row>
+        </div>
               </AntdCard>
     </div>
   );
